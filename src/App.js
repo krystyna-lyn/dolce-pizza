@@ -10,8 +10,8 @@ function App() {
             <div class="header__logo">
               <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
               <div>
-                <h1>React Pizza</h1>
-                <p>самая вкусная пицца во вселенной</p>
+                <h1>Dolce Pizza</h1>
+                <p>Authentic Italian Flavor, Out of This World</p>
               </div>
             </div>
             <div class="header__cart">
@@ -57,12 +57,11 @@ function App() {
             <div class="content__top">
               <div class="categories">
                 <ul>
-                  <li class="active">Все</li>
-                  <li>Мясные</li>
-                  <li>Вегетарианская</li>
-                  <li>Гриль</li>
-                  <li>Острые</li>
-                  <li>Закрытые</li>
+                  <li class="active">All</li>
+                  <li>Meat</li>
+                  <li>Vegetarian</li>
+                  <li>Grilled</li>
+                  <li>Spicy</li>
                 </ul>
               </div>
               <div class="sort">
@@ -79,20 +78,135 @@ function App() {
                       fill="#2C2C2C"
                     />
                   </svg>
-                  <b>Сортировка по:</b>
-                  <span>популярности</span>
+                  <b>Sort by:</b>
+                  <span>Popular</span>
                 </div>
                 <div class="sort__popup">
                   <ul>
-                    <li class="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
+                    <li class="active">Popular</li>
+                    <li>Price</li>
+                    <li>A-Z</li>
                   </ul>
                 </div>
               </div>
             </div>
-            <h2 class="content__title">Все пиццы</h2>
+            <h2 class="content__title">All Pizzas</h2>
             <div class="content__items">
+
+              <div class="pizza-block">
+                <img
+                  class="pizza-block__image"
+                  src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                  alt="Pizza"
+                />
+                <h4 class="pizza-block__title">Cheeseburger Pizza</h4>
+                <div class="pizza-block__selector">
+                  <ul>
+                    <li class="active">Thin</li>
+                    <li>Traditional</li>
+                  </ul>
+                  <ul>
+                    <li class="active">26 cm</li>
+                    <li>30 cm</li>
+                    <li>40 cm</li>
+                  </ul>
+                </div>
+                <div class="pizza-block__bottom">
+                  <div class="pizza-block__price">from €15</div>
+                  <div class="button button--outline button--add">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Add</span>
+                    <i>2</i>
+                  </div>
+                </div>
+              </div>
+              <div class="pizza-block">
+                <img
+                  class="pizza-block__image"
+                  src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                  alt="Pizza"
+                />
+                <h4 class="pizza-block__title">Cheeseburger Pizza</h4>
+                <div class="pizza-block__selector">
+                  <ul>
+                    <li class="active">Thin</li>
+                    <li>Traditional</li>
+                  </ul>
+                  <ul>
+                    <li class="active">26 cm</li>
+                    <li>30 cm</li>
+                    <li>40 cm</li>
+                  </ul>
+                </div>
+                <div class="pizza-block__bottom">
+                  <div class="pizza-block__price">from €15</div>
+                  <div class="button button--outline button--add">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Add</span>
+                    <i>2</i>
+                  </div>
+                </div>
+              </div>
+              <div class="pizza-block">
+                <img
+                  class="pizza-block__image"
+                  src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                  alt="Pizza"
+                />
+                <h4 class="pizza-block__title">Cheeseburger Pizza</h4>
+                <div class="pizza-block__selector">
+                  <ul>
+                    <li class="active">Thin</li>
+                    <li>Traditional</li>
+                  </ul>
+                  <ul>
+                    <li class="active">26 cm</li>
+                    <li>30 cm</li>
+                    <li>40 cm</li>
+                  </ul>
+                </div>
+                <div class="pizza-block__bottom">
+                  <div class="pizza-block__price">from €15</div>
+                  <div class="button button--outline button--add">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <span>Add</span>
+                    <i>2</i>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
