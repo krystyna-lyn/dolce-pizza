@@ -1,27 +1,31 @@
+const PizzaBlock = ({ title, price, sizes, types }) => {
 
-
-const PizzaBlock = () => {
+    const typeNames = ['Thin', 'Tradicional'];
     return (
+
         <div class="pizza-block">
             <img
                 class="pizza-block__image"
                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                 alt="Pizza"
             />
-            <h4 class="pizza-block__title">Cheeseburger Pizza</h4>
+            <h4 class="pizza-block__title">{title}</h4>
             <div class="pizza-block__selector">
                 <ul>
                     <li class="active">Thin</li>
                     <li>Traditional</li>
                 </ul>
                 <ul>
-                    <li class="active">26 cm</li>
-                    <li>30 cm</li>
-                    <li>40 cm</li>
+                    {sizes.map((size) => (
+                        <li>{size}</li>
+                    ))
+                    }
+
+
                 </ul>
             </div>
             <div class="pizza-block__bottom">
-                <div class="pizza-block__price">from €15</div>
+                <div class="pizza-block__price">from €{price}</div>
                 <div class="button button--outline button--add">
                     <svg
                         width="12"

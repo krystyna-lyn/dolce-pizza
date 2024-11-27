@@ -2,6 +2,7 @@ import Categories from './components/Categories';
 import Header from './components/Header';
 import PizzaBlock from './components/PizzaBlock';
 import './scss/app.scss';
+import { pizzas } from './assets/pizzas';
 
 function App() {
   return (
@@ -41,9 +42,9 @@ function App() {
             </div>
             <h2 class="content__title">All Pizzas</h2>
             <div class="content__items">
-              <PizzaBlock />
-              <PizzaBlock />
-              <PizzaBlock />
+              {pizzas.map((obj) => (
+                <PizzaBlock title={obj.name} price={obj.price} sizes={obj.sizes} types={obj.types} />
+              ))}
 
             </div>
           </div>
