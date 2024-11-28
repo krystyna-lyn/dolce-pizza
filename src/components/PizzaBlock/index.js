@@ -1,6 +1,7 @@
 const PizzaBlock = ({ title, price, sizes, types }) => {
 
     const typeNames = ['Thin', 'Tradicional'];
+
     return (
 
         <div class="pizza-block">
@@ -12,15 +13,16 @@ const PizzaBlock = ({ title, price, sizes, types }) => {
             <h4 class="pizza-block__title">{title}</h4>
             <div class="pizza-block__selector">
                 <ul>
-                    <li class="active">Thin</li>
-                    <li>Traditional</li>
+                    {types.map((typeIndex) => (
+                        <li>{typeNames[typeIndex]}</li>
+                    ))
+                    /* <li class="active">Thin</li>
+                    <li>Traditional</li> */}
                 </ul>
                 <ul>
                     {sizes.map((size) => (
                         <li>{size}</li>
-                    ))
-                    }
-
+                    ))}
 
                 </ul>
             </div>
