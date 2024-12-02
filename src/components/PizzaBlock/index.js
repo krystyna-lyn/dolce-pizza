@@ -5,8 +5,6 @@ const PizzaBlock = ({ title, price, sizes, types }) => {
     const typeNames = ['Thin', 'Tradicional'];
     const [activeType, setActivetype] = useState(1);
     const [activeSize, setActiveSize] = useState(0);
-    console.log(activeType)
-
 
     return (
 
@@ -19,13 +17,13 @@ const PizzaBlock = ({ title, price, sizes, types }) => {
             <h4 class="pizza-block__title">{title}</h4>
             <div class="pizza-block__selector">
                 <ul>
-                    {types.map((typeIndex) => (
-                        <li onClick={() => setActivetype(typeIndex)} className={activeType === typeIndex ? 'active' : ''}>{typeNames[typeIndex]}</li>
+                    {types.map((typeIndex, i) => (
+                        <li key={i} onClick={() => setActivetype(typeIndex)} className={activeType === typeIndex ? 'active' : ''}>{typeNames[typeIndex]}</li>
                     ))}
                 </ul>
                 <ul>
                     {sizes.map((size, i) => (
-                        <li onClick={() => setActiveSize(i)} className={activeSize === i ? 'active' : ''}>{size}</li>
+                        <li key={i} onClick={() => setActiveSize(i)} className={activeSize === i ? 'active' : ''}>{size}</li>
                     ))}
 
                 </ul>

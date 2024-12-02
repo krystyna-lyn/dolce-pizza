@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 
 const Sort = () => {
     const [isOpen, setIsopen] = useState(false);
+    const [selected, setSelected] = useState(0);
+
+    const list = ['Popular', 'Price', 'A-Z'];
 
     return (
         <div class="sort">
@@ -24,9 +27,15 @@ const Sort = () => {
             {isOpen && (
                 <div className='sort__popup'>
                     <ul>
-                        <li class="active">Popular</li>
-                        <li>Price</li>
-                        <li>A-Z</li>
+                        {
+                            list.map((name, index) => (
+                                <li key={index}
+                                    onClick={() => setSelected(index)}
+                                    className={selected === index ? 'active' : ''}
+                                >{name}</li>
+                            ))
+                        }
+
                     </ul>
                 </div>)
             }
