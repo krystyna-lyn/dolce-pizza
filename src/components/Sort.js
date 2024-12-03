@@ -4,8 +4,14 @@ const Sort = () => {
     const [isOpen, setIsopen] = useState(false);
     const [selected, setSelected] = useState(0);
 
-    const list = ['Popular', 'Price', 'A-Z'];
 
+    const list = ['Popular', 'Price', 'A-Z'];
+    const sortName = list[selected];
+
+    const selectItem = (index) => {
+        setSelected(index);
+        setIsopen(false);
+    }
     return (
         <div class="sort">
             <div class="sort__label">
@@ -22,7 +28,7 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Sort by:</b>
-                <span onClick={() => setIsopen(!isOpen)}>Popular</span>
+                <span onClick={() => setIsopen(!isOpen)}>{sortName}</span>
             </div>
             {isOpen && (
                 <div className='sort__popup'>
@@ -30,7 +36,7 @@ const Sort = () => {
                         {
                             list.map((name, index) => (
                                 <li key={index}
-                                    onClick={() => setSelected(index)}
+                                    onClick={() => selectItem(index)}
                                     className={selected === index ? 'active' : ''}
                                 >{name}</li>
                             ))

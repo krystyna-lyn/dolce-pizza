@@ -3,7 +3,7 @@ import { useState } from "react";
 const PizzaBlock = ({ title, price, sizes, types }) => {
 
     const typeNames = ['Thin', 'Tradicional'];
-    const [activeType, setActivetype] = useState(1);
+    const [activeType, setActivetype] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
 
     return (
