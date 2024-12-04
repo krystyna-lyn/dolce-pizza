@@ -2,7 +2,6 @@ import Categories from './components/Categories';
 import Header from './components/Header';
 import PizzaBlock from './components/PizzaBlock';
 import './scss/app.scss';
-import { pizzas } from './assets/pizzas';
 import Sort from './components/Sort';
 import { db } from "./firebaseConfig";
 import {
@@ -50,15 +49,15 @@ function App() {
 
             </div>
             <h2 class="content__title">All Pizzas</h2>
-            <div>
-              {pizzaList.map((item, id) => (
-                <h1>{item.name}</h1>
-              ))
-              }
-            </div>
+
             <div class="content__items">
-              {pizzas.map((obj) => (
-                <PizzaBlock title={obj.name} price={obj.price} sizes={obj.sizes} types={obj.types} />
+              {pizzaList.map((obj) => (
+                <PizzaBlock
+                  title={obj.name}
+                  image={obj.image}
+                  price={obj.price}
+                  sizes={obj.sizes}
+                  types={obj.types} />
               ))}
 
             </div>
