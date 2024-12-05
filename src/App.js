@@ -1,14 +1,12 @@
-import Categories from './components/Categories';
 import Header from './components/Header';
-import PizzaBlock from './components/PizzaBlock';
 import './scss/app.scss';
-import Sort from './components/Sort';
 import { db } from "./firebaseConfig";
-import {
-  getDocs,
-  collection
-} from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Auth from './components/pages/Auth';
+import Home from './components/pages/Home';
+
 
 function App() {
 
@@ -38,33 +36,23 @@ function App() {
 
   return (
     <div className="App">
-
       <div class="wrapper">
-        <Header />
-        <div class="content">
-          <div class="container">
-            <div class="content__top">
-              <Categories />
-              <Sort />
 
-            </div>
-            <h2 class="content__title">All Pizzas</h2>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home
+              items={pizzaList}
+              exact
+            />} />
+            <Route path="/login" element={<Auth />} />
+          </Routes>
+        </Router>
 
-            <div class="content__items">
-              {pizzaList.map((obj) => (
-                <PizzaBlock
-                  title={obj.name}
-                  image={obj.image}
-                  price={obj.price}
-                  sizes={obj.sizes}
-                  types={obj.types} />
-              ))}
-
-            </div>
-          </div>
-        </div>
       </div>
+
     </div>
+
 
   )
 }
