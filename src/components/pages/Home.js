@@ -2,7 +2,7 @@ import Categories from '../Categories';
 import Sort from '../Sort';
 import PizzaBlock from '../PizzaBlock';
 
-const Home = ({ items }) => {
+const Home = ({ items, loading }) => {
 
     return (
         <div class="content">
@@ -15,18 +15,26 @@ const Home = ({ items }) => {
                 <h2 class="content__title">All Pizzas</h2>
 
                 <div class="content__items">
-                    {items.map((obj) => (
+                    {loading ? [...Array(3)] : items.map((obj) => (
                         <PizzaBlock
                             title={obj.name}
                             image={obj.image}
                             price={obj.price}
                             sizes={obj.sizes}
-                            types={obj.types} />
-                    ))}
+                            types={obj.types}
+                            isLoading={loading} />
+                    ))
+
+                    }
+
 
                 </div>
+
+
             </div>
         </div>
+
+
     )
 }
 

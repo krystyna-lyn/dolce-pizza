@@ -9,12 +9,10 @@ const Auth = () => {
 
                 <input type="email"
                     placeholder="Email"
-                    value="{email}"
                     required
                 />
                 <input type="password"
                     placeholder="Password"
-                    value="{password}"
                     required
                 />
                 <button className="greenButton">Login</button>

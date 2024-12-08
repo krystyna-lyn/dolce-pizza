@@ -11,6 +11,7 @@ import Home from './components/pages/Home';
 function App() {
 
   const [pizzaList, setpizzaList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const pizzaCollectionRef = collection(db, "pizza");
 
@@ -22,8 +23,9 @@ function App() {
         ...doc.data(),
         id: doc.id,
       }));
+      setLoading(false);
       setpizzaList(filteredData);
-      console.log(filteredData);
+
     } catch (err) {
       console.error(err);
     }
@@ -43,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home
               items={pizzaList}
+              isLoading={loading}
               exact
             />} />
             <Route path="/login" element={<Auth />} />
