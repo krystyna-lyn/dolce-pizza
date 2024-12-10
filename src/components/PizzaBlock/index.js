@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Skeleton } from "../Skeleton";
 
-const PizzaBlock = ({ title, image, price, sizes, types, loading }) => {
+const PizzaBlock = ({ title, image, price, sizes, types, loading = false }) => {
 
     const typeNames = ['Thin', 'Tradicional'];
     const [activeType, setActivetype] = useState(0);

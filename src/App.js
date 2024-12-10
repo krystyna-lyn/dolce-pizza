@@ -11,7 +11,7 @@ import Home from './components/pages/Home';
 function App() {
 
   const [pizzaList, setpizzaList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const pizzaCollectionRef = collection(db, "pizza");
 
@@ -23,7 +23,7 @@ function App() {
         ...doc.data(),
         id: doc.id,
       }));
-      setLoading(false);
+      setIsLoading(false);
       setpizzaList(filteredData);
 
     } catch (err) {
@@ -43,11 +43,13 @@ function App() {
         <Router>
           <Header />
           <Routes>
-            <Route path="/" element={<Home
-              items={pizzaList}
-              isLoading={loading}
-              exact
-            />} />
+            <Route path="/" element={
+              <Home
+                items={pizzaList}
+                isLoading={isLoading}
+                exact
+              />
+            } />
             <Route path="/login" element={<Auth />} />
           </Routes>
         </Router>
