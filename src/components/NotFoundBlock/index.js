@@ -1,12 +1,14 @@
-import React from 'react'
+import styles from './NotFound.module.scss'
 
 const index = () => {
   return (
     <>
-      <span>
-        🙁
-      </span>
-      <h1>404: Page Not Found</h1>
+      <h1 className={styles.root}>
+        <span>
+          🙁
+          <p> 404: Page Not Found</p>
+        </span>
+      </h1 >
     </>
   )
 }
