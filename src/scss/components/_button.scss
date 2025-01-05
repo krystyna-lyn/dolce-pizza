@@ -146,4 +146,14 @@
       font-size: 16px;
     }
   }
+
+  &--user {
+    padding: 12px 17px;
+    line-height: 23px;
+    min-width: auto;
+
+    svg {
+      width: 20px;
+    }
+  }
 }

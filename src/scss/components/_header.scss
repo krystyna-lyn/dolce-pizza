@@ -29,4 +29,12 @@
       color: #7b7b7b;
     }
   }
+
+  &__cart {
+    display: flex;
+  }
+
+  &__user {
+    margin-right: 15px;
+  }
 }
