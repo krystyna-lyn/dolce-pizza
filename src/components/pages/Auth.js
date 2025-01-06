@@ -2,11 +2,9 @@ import React from 'react'
 
 const Auth = () => {
     return (
-        <div className="d-flex flex-column justify-center align-center">
+        <div class="login-content">
             <h1>Login</h1>
-            <form className="form d-flex flex-column justify-center align-center"
-            >
-
+            <form class='form'>
                 <input type="email"
                     placeholder="Email"
                     required
@@ -15,7 +13,7 @@ const Auth = () => {
                     placeholder="Password"
                     required
                 />
-                <button className="greenButton">Login</button>
+                <button class="button">Go</button>
             </form>
         </div>
     )
