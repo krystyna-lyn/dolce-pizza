@@ -25,9 +25,23 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 11px;
+  }
+
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(1, 3fr);
+  }
+
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 730px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 
   &__top {
