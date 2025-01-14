@@ -33,6 +33,7 @@ const Home = () => {
 
     useEffect(() => {
         getPizzaList();
+        window.scrollTo(0, 0)
     }, []);
 
 
