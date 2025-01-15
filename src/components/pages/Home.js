@@ -4,7 +4,7 @@ import { Skeleton } from '../Skeleton';
 import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 
 
@@ -12,19 +12,24 @@ const Home = () => {
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [sortField, setSortField] = useState("category")
 
     const pizzaCollectionRef = collection(db, "pizza");
 
     const getPizzaList = async () => {
         try {
-            const data = await getDocs(pizzaCollectionRef);
-
+            // Create a query with sorting
+            const q = query(pizzaCollectionRef, orderBy(sortField));
+            const data = await getDocs(q);
             const filteredData = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
+
             }));
             setIsLoading(false);
             setpizzaList(filteredData);
+            console.log(filteredData)
+
 
         } catch (err) {
             console.error(err);
