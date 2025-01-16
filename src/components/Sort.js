@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
 
-const Sort = () => {
-    const [isOpen, setIsopen] = useState(false);
+const Sort = ({ setSortField }) => {
+    const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(0);
 
 
     const list = ['Popular', 'Price', 'A-Z'];
-    const sortName = list[selected];
+    const sortKeys = ['category', 'price', 'name']; // corresponding keys for sorting
+
+    const sortName = list[selected]; // Display name
+    //console.log(sortName);
+
 
     const selectItem = (index) => {
-        setSelected(index);
-        setIsopen(false);
+        setSelected(index); // Update selected item
+        setIsOpen(false); // Close dropdown
+        setSortField(sortKeys[index]); // Set the sort field dynamically based on the selected key
+
     }
     return (
         <div class="sort">
@@ -28,7 +34,7 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Sort by:</b>
-                <span onClick={() => setIsopen(!isOpen)}>{sortName}</span>
+                <span onClick={() => setIsOpen(!isOpen)}>{sortName}</span>
             </div>
             {isOpen && (
                 <div className='sort__popup'>
@@ -43,7 +49,8 @@ const Sort = () => {
                         }
 
                     </ul>
-                </div>)
+                </div>
+            )
             }
         </div>
     )

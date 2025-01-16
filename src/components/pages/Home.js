@@ -12,7 +12,7 @@ const Home = () => {
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [sortField, setSortField] = useState("category")
+    const [sortField, setSortField] = useState("price")
 
     const pizzaCollectionRef = collection(db, "pizza");
 
@@ -39,7 +39,7 @@ const Home = () => {
     useEffect(() => {
         getPizzaList();
         window.scrollTo(0, 0)
-    }, []);
+    }, [sortField]);
 
 
     return (
@@ -47,11 +47,11 @@ const Home = () => {
             <div class="container">
                 <div class="content__top">
                     <Categories />
-                    <Sort />
+                    <Sort setSortField={setSortField} />
                 </div>
                 <h2 class="content__title">All Pizzas</h2>
                 <div class="content__items">
-                    {isLoading ? [...Array(3)].map(() => <Skeleton />) : pizzaList.map((obj) => (
+                    {isLoading ? [...Array(4)].map(() => <Skeleton />) : pizzaList.map((obj) => (
                         <PizzaBlock
                             title={obj.name}
                             image={obj.image}
