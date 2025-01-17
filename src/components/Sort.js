@@ -6,7 +6,7 @@ const Sort = ({ setSortField }) => {
 
 
     const list = ['Popular', 'Price', 'A-Z'];
-    const sortKeys = ['category', 'price', 'name']; // corresponding keys for sorting
+    const sortKeys = ['popular', 'price', 'name']; // corresponding keys for sorting
 
     const sortName = list[selected]; // Display name
     //console.log(sortName);

@@ -13,13 +13,15 @@ const Home = () => {
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortField, setSortField] = useState("price")
+    const [category, setCategory] = useState(555)
+
 
     const pizzaCollectionRef = collection(db, "pizza");
 
     const getPizzaList = async () => {
         try {
             // Create a query with sorting
-            const q = query(pizzaCollectionRef, orderBy(sortField));
+            const q = query(pizzaCollectionRef, orderBy(sortField, 'asc'));
             const data = await getDocs(q);
             const filteredData = data.docs.map((doc) => ({
                 ...doc.data(),
@@ -28,8 +30,6 @@ const Home = () => {
             }));
             setIsLoading(false);
             setpizzaList(filteredData);
-            console.log(filteredData)
-
 
         } catch (err) {
             console.error(err);
@@ -46,7 +46,7 @@ const Home = () => {
         <div class="content">
             <div class="container">
                 <div class="content__top">
-                    <Categories />
+                    <Categories value={category} />
                     <Sort setSortField={setSortField} />
                 </div>
                 <h2 class="content__title">All Pizzas</h2>
