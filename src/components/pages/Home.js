@@ -13,7 +13,7 @@ const Home = () => {
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortField, setSortField] = useState("price")
-    const [category, setCategory] = useState(555)
+    const [categoryId, setCategoryId] = useState(555)
 
 
     const pizzaCollectionRef = collection(db, "pizza");
@@ -46,7 +46,7 @@ const Home = () => {
         <div class="content">
             <div class="container">
                 <div class="content__top">
-                    <Categories value={category} />
+                    <Categories value={categoryId} onClickCat={(id) => setCategoryId(id)} />
                     <Sort setSortField={setSortField} />
                 </div>
                 <h2 class="content__title">All Pizzas</h2>
