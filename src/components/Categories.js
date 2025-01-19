@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
-
 const Categories = ({ value, onClickCat }) => {
 
     const categories = ['All', 'Meat', 'Vegetarian', 'Grilled', 'Spicy'];
-    const sortKeys = ['category']; // corresponding keys for sorting
 
     //console.log(value)
-
 
     return (
         <div class="categories">
