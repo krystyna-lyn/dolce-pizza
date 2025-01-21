@@ -13,6 +13,7 @@ const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [sortField, setSortField] = useState("price");
     const [categoryId, setCategoryId] = useState(0);
+    const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
 
     const pizzaCollectionRef = collection(db, "pizza");
 
@@ -21,7 +22,7 @@ const Home = () => {
             setIsLoading(true);
 
             // Base query
-            let q = query(pizzaCollectionRef, orderBy(sortField, 'asc'));
+            let q = query(pizzaCollectionRef, orderBy(sortField, sortOrder));
 
             // Add category filtering if a specific category is selected
             if (categoryId !== 0) {
@@ -49,13 +50,18 @@ const Home = () => {
     useEffect(() => {
         getPizzaList();
         window.scrollTo(0, 0);
-    }, [categoryId, sortField]);
+    }, [categoryId, sortField, sortOrder]);
 
     return (
         <div className="content">
             <div className="container">
                 <div className="content__top">
-                    <Categories value={categoryId} onClickCat={(id) => setCategoryId(id)} />
+
+                    <button class="sort-button" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
+                        Sort {sortOrder === "asc" ? "↑" : "↓"}
+                    </button>
+
+                    <Categories value={categoryId} onClickCat={(i) => setCategoryId(i)} />
                     <Sort setSortField={setSortField} />
                 </div>
                 <h2 className="content__title">All Pizzas</h2>

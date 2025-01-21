@@ -76,6 +76,20 @@ body {
       }
     }
 
+    .sort-button {
+      color: #fff;
+      display: inline-block;
+      background-color: $black;
+      border-radius: 30px;
+      padding: 10px 20px;
+      min-width: 100px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color $duration ease-in-out, border-color $duration ease-in-out;
+      border: 1px solid transparent;
+
+    }
+
     @media (max-width: 760px) {
       .categories {
         ul {
