@@ -32,6 +32,7 @@ const Home = () => {
                     where('category', '==', categoryId)
                 );
             }
+            console.log(categoryId)
 
             // Fetch data
             const data = await getDocs(q);

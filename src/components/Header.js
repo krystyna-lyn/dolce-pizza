@@ -1,20 +1,23 @@
 import React from 'react'
 import logo from '../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
+import Search from './Search';
 
 const Header = () => {
     return (
         <div class="header">
             <div class="container">
-                <div class="header__logo">
-                    <Link to='/'>
+                <Link to='/'>
+                    <div class="header__logo">
                         <img width="38" src={logo} alt="Pizza logo" />
                         <div>
                             <h1>Dolce Pizza</h1>
                             <p>Authentic Italian Flavor</p>
                         </div>
-                    </Link>
-                </div>
+                    </div>
+                </Link>
+
+                <Search />
 
                 <div class="header__cart">
                     <div class="header__user">
@@ -66,7 +69,7 @@ const Header = () => {
 
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
