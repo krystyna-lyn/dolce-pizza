@@ -8,7 +8,8 @@ import { getDocs, collection, query, orderBy, where } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 
 
-const Home = () => {
+const Home = ({ searchValue }) => {
+
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortField, setSortField] = useState("price");
@@ -53,6 +54,25 @@ const Home = () => {
         window.scrollTo(0, 0);
     }, [categoryId, sortField, sortOrder]);
 
+    const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
+    const pizzas = pizzaList.filter(
+        obj => {
+            if (obj.name.
+                toLowerCase().
+                includes(searchValue.toLowerCase())) {
+                return true;
+            }
+            return false;
+        })
+        .map((obj) => (<PizzaBlock
+            key={obj.id}
+            title={obj.name}
+            image={obj.image}
+            price={obj.price}
+            sizes={obj.sizes}
+            types={obj.types}
+        />))
+
     return (
         <div className="content">
             <div className="container">
@@ -67,18 +87,7 @@ const Home = () => {
                 </div>
                 <h2 className="content__title">All Pizzas</h2>
                 <div className="content__items">
-                    {isLoading
-                        ? [...Array(4)].map((_, index) => <Skeleton key={index} />)
-                        : pizzaList.map((obj) => (
-                            <PizzaBlock
-                                key={obj.id}
-                                title={obj.name}
-                                image={obj.image}
-                                price={obj.price}
-                                sizes={obj.sizes}
-                                types={obj.types}
-                            />
-                        ))}
+                    {isLoading ? skeleton : pizzas}
                 </div>
             </div>
         </div>
