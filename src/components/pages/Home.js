@@ -4,8 +4,9 @@ import { Skeleton } from '../Skeleton';
 import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
-import { getDocs, collection, query, orderBy, where } from "firebase/firestore";
-import { useEffect, useState } from 'react';
+import { getDocs, collection, query, orderBy, where, limit, startAt, endAt, startAfter } from "firebase/firestore";
+import { useEffect, useRef, useState } from 'react';
+import Pagination from '../Pagination';
 
 
 const Home = ({ searchValue }) => {
@@ -15,44 +16,73 @@ const Home = ({ searchValue }) => {
     const [sortField, setSortField] = useState("price");
     const [categoryId, setCategoryId] = useState(0);
     const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
+    const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
+    const [totalPizzas, setTotalPizzas] = useState(0); // To store the total number of pizzas
 
+    const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
+    const pageCount = Math.ceil(totalPizzas / pizzasPerPage);
+    const getTotalPizzas = async () => {
+        const data = await getDocs(pizzaCollectionRef);
+        setTotalPizzas(data.size); // Firestore's size property gives the total documents in the collection
+    };
+
+    const lastDocRef = useRef(null); // Последний документ для пагинации
 
     const getPizzaList = async () => {
         try {
             setIsLoading(true);
 
-            // Base query
-            let q = query(pizzaCollectionRef, orderBy(sortField, sortOrder));
+            // Стандартный запрос
+            let q = query(
+                pizzaCollectionRef,
+                orderBy(sortField, sortOrder), // Сортировка
+                limit(pizzasPerPage)          // Количество пицц за раз
+            );
 
-            // Add category filtering if a specific category is selected
-            if (categoryId !== 0) {
+            // Если текущая страница больше 1, начинаем с последнего документа
+            if (currentPage > 1 && lastDocRef.current) {
                 q = query(
                     pizzaCollectionRef,
-                    orderBy(sortField, 'asc'),
-                    where('category', '==', categoryId)
+                    orderBy(sortField, sortOrder),
+                    startAfter(lastDocRef.current), // Переход к следующей странице
+                    limit(pizzasPerPage)
                 );
             }
-            console.log(categoryId)
 
-            // Fetch data
+            // Получаем данные
             const data = await getDocs(q);
+
+            // Сохраняем последний документ
+            lastDocRef.current = data.docs[data.docs.length - 1];
+
+            // Преобразуем документы в массив объектов
             const filteredData = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
             }));
 
+            setpizzaList(filteredData); // Сохраняем пиццы в состояние
             setIsLoading(false);
-            setpizzaList(filteredData);
+            console.log("Запрос к Firestore:", q);
         } catch (err) {
-            console.error(err);
+            console.error("Ошибка загрузки пицц:", err);
         }
     };
 
+
+
     useEffect(() => {
+        getTotalPizzas(); // Fetch total pizzas on initial load
+    }, []);
+
+    useEffect(() => {
+        console.log("Текущая страница:", currentPage);
+        console.log("Сортировка:", sortField, sortOrder);
+        console.log("Категория:", categoryId);
         getPizzaList();
         window.scrollTo(0, 0);
-    }, [categoryId, sortField, sortOrder]);
+    }, [categoryId, sortField, sortOrder, currentPage]);
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
     const pizzas = pizzaList.filter(
@@ -90,6 +120,10 @@ const Home = ({ searchValue }) => {
                     {isLoading ? skeleton : pizzas}
                 </div>
             </div>
+            <Pagination
+                onChangePage={(number) => setCurrentPage(number)}
+                pageCount={Math.ceil(totalPizzas / pizzasPerPage)} // Считаем количество страниц
+            />
         </div>
     );
 };
