@@ -5,11 +5,14 @@ import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
 import { getDocs, collection, query, orderBy, where, limit, startAt, endAt, startAfter } from "firebase/firestore";
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
+import { SearchContext } from '../../App';
 
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+
+    const { searchValue } = useContext(SearchContext);
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -21,49 +24,51 @@ const Home = ({ searchValue }) => {
 
     const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
-    const pageCount = Math.ceil(totalPizzas / pizzasPerPage);
+
+
     const getTotalPizzas = async () => {
         const data = await getDocs(pizzaCollectionRef);
-        setTotalPizzas(data.size); // Firestore's size property gives the total documents in the collection
+        setTotalPizzas(data.size);  //total items in the collection
     };
 
-    const lastDocRef = useRef(null); // Последний документ для пагинации
+    const lastDocRef = useRef(null); // last document(item)
 
     const getPizzaList = async () => {
         try {
             setIsLoading(true);
 
-            // Стандартный запрос
+            // base query
             let q = query(
                 pizzaCollectionRef,
-                orderBy(sortField, sortOrder), // Сортировка
-                limit(pizzasPerPage)          // Количество пицц за раз
+                orderBy(sortField, sortOrder), // sort
+                limit(pizzasPerPage)
             );
 
-            // Если текущая страница больше 1, начинаем с последнего документа
+            // if current page more than 1, start with last document
             if (currentPage > 1 && lastDocRef.current) {
                 q = query(
                     pizzaCollectionRef,
                     orderBy(sortField, sortOrder),
-                    startAfter(lastDocRef.current), // Переход к следующей странице
+                    startAfter(lastDocRef.current), // go to second page
                     limit(pizzasPerPage)
                 );
             }
 
-            // Получаем данные
+            // data
             const data = await getDocs(q);
 
-            // Сохраняем последний документ
+            // save last document
             lastDocRef.current = data.docs[data.docs.length - 1];
 
-            // Преобразуем документы в массив объектов
+
             const filteredData = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
             }));
 
-            setpizzaList(filteredData); // Сохраняем пиццы в состояние
+            setpizzaList(filteredData); //save pizzas in state
             setIsLoading(false);
+
             console.log("Запрос к Firestore:", q);
         } catch (err) {
             console.error("Ошибка загрузки пицц:", err);
