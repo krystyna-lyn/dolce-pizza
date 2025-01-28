@@ -1,19 +1,21 @@
-const Categories = ({ value, onClickCat }) => {
+const Categories = ({ categoryId, onClickCat }) => {
 
     const categories = ['All', 'Meat', 'Vegetarian', 'Grilled', 'Spicy'];
 
-    //console.log(value)
+    console.log(categoryId)
 
     return (
         <div class="categories">
             <ul>
                 {categories.map((category, index) => (
+
                     <li key={index}
                         onClick={() => onClickCat(index)}
-                        className={value === index ? 'active' : ''}>
+                        className={categoryId === index ? 'active' : ''}>
                         {category}
                     </li>
                 ))
+
                 }
 
             </ul>

@@ -44,6 +44,15 @@ const Home = () => {
                 limit(pizzasPerPage)
             );
 
+            // filter category
+            if (categoryId > 0) {
+                q = query(
+                    pizzaCollectionRef,
+                    where("category", "==", categoryId),
+                    orderBy(sortField, sortOrder),
+                    limit(pizzasPerPage)
+                );
+            }
             // if current page more than 1, start with last document
             if (currentPage > 1 && lastDocRef.current) {
                 q = query(
@@ -53,6 +62,8 @@ const Home = () => {
                     limit(pizzasPerPage)
                 );
             }
+
+
 
             // data
             const data = await getDocs(q);
@@ -69,9 +80,9 @@ const Home = () => {
             setpizzaList(filteredData); //save pizzas in state
             setIsLoading(false);
 
-            console.log("Запрос к Firestore:", q);
+            //console.log(q);
         } catch (err) {
-            console.error("Ошибка загрузки пицц:", err);
+            console.error(err);
         }
     };
 
@@ -82,14 +93,16 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        console.log("Текущая страница:", currentPage);
-        console.log("Сортировка:", sortField, sortOrder);
-        console.log("Категория:", categoryId);
+        // console.log("current page:", currentPage);
+        // console.log("sort:", sortField, sortOrder);
+        // console.log("category:", categoryId);
+
         getPizzaList();
         window.scrollTo(0, 0);
     }, [categoryId, sortField, sortOrder, currentPage]);
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
+
     const pizzas = pizzaList.filter(
         obj => {
             if (obj.name.
@@ -117,7 +130,7 @@ const Home = () => {
                         Sort {sortOrder === "asc" ? "↑" : "↓"}
                     </button>
 
-                    <Categories value={categoryId} onClickCat={(i) => setCategoryId(i)} />
+                    <Categories categoryId={categoryId} onClickCat={(i) => setCategoryId(i)} />
                     <Sort setSortField={setSortField} />
                 </div>
                 <h2 className="content__title">All Pizzas</h2>
