@@ -4,11 +4,13 @@ import { Skeleton } from '../Skeleton';
 import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
-import { getDocs, collection, query, orderBy, where, limit, startAt, endAt, startAfter } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
 import { useContext, useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
 import { SearchContext } from '../../App';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../../redux/slices/categorySlice';
 
 const Home = () => {
 
@@ -17,10 +19,14 @@ const Home = () => {
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortField, setSortField] = useState("price");
-    const [categoryId, setCategoryId] = useState(0);
+
     const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
     const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
     const [totalPizzas, setTotalPizzas] = useState(0); // To store the total number of pizzas
+
+    // categoriId from Redux
+    const categoryId = useSelector((state) => state.category.categoryId);
+    const dispatch = useDispatch();
 
     const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
@@ -45,6 +51,7 @@ const Home = () => {
             );
 
             // filter category
+
             if (categoryId > 0) {
                 q = query(
                     pizzaCollectionRef,
@@ -62,8 +69,6 @@ const Home = () => {
                     limit(pizzasPerPage)
                 );
             }
-
-
 
             // data
             const data = await getDocs(q);
@@ -85,8 +90,6 @@ const Home = () => {
             console.error(err);
         }
     };
-
-
 
     useEffect(() => {
         getTotalPizzas(); // Fetch total pizzas on initial load
@@ -130,7 +133,7 @@ const Home = () => {
                         Sort {sortOrder === "asc" ? "↑" : "↓"}
                     </button>
 
-                    <Categories categoryId={categoryId} onClickCat={(i) => setCategoryId(i)} />
+                    <Categories setCategoryId={(id) => dispatch(setCategoryId(id))} />
                     <Sort setSortField={setSortField} />
                 </div>
                 <h2 className="content__title">All Pizzas</h2>
@@ -140,7 +143,7 @@ const Home = () => {
             </div>
             <Pagination
                 onChangePage={(number) => setCurrentPage(number)}
-                pageCount={Math.ceil(totalPizzas / pizzasPerPage)} // Считаем количество страниц
+                pageCount={Math.ceil(totalPizzas / pizzasPerPage)}
             />
         </div>
     );
