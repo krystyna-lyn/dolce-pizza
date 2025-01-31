@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "../redux/slices/categorySlice";
 
 const Categories = ({ setCategoryId }) => {
 
