@@ -18,7 +18,8 @@ const Home = () => {
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [sortField, setSortField] = useState("price");
+
+    const sortField = useSelector((state) => state.sort.sortField);
 
     const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
     const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
@@ -134,7 +135,8 @@ const Home = () => {
                     </button>
 
                     <Categories setCategoryId={(id) => dispatch(setCategoryId(id))} />
-                    <Sort setSortField={setSortField} />
+                    <Sort />
+
                 </div>
                 <h2 className="content__title">All Pizzas</h2>
                 <div className="content__items">

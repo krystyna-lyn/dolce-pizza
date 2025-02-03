@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import categoryReducer from '../redux/slices/categorySlice'
+import category from '../redux/slices/categorySlice'
 import searchReducer from '../redux/slices/searchSlice'
+import sort from '../redux/slices/sortSlice'
 
 export const store = configureStore({
     reducer: {
-        category: categoryReducer,
+        category,
         search: searchReducer,
+        sort: sort,
     },
 });
 

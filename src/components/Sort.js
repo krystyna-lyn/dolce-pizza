@@ -1,23 +1,28 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { setSortField } from '../redux/slices/sortSlice';
 
-const Sort = ({ setSortField }) => {
+
+const Sort = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(0);
 
+    const dispatch = useDispatch();
+    const sortField = useSelector((state) => state.sort.sortField);
 
     const list = ['Popular', 'Price', 'A-Z'];
     const sortKeys = ['popular', 'price', 'name']; // corresponding keys for sorting
 
-    const sortName = list[selected]; // Display name
-    //console.log(sortName);
+    const currentIndex = sortKeys.indexOf(sortField); // index of sortfield
+    const sortName = list[currentIndex]; // name of sortfield
 
+    console.log(sortName)
 
     const selectItem = (index) => {
-        setSelected(index); // Update selected item
-        setIsOpen(false); // Close dropdown
-        setSortField(sortKeys[index]); // Set the sort field dynamically based on the selected key
+        dispatch(setSortField(sortKeys[index])); //send to redux
+        setIsOpen(false);
+    };
 
-    }
     return (
         <div class="sort">
             <div class="sort__label">
@@ -50,8 +55,7 @@ const Sort = ({ setSortField }) => {
 
                     </ul>
                 </div>
-            )
-            }
+            )}
         </div>
     )
 }
