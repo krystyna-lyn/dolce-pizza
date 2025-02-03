@@ -14,7 +14,8 @@ import { setCategoryId } from '../../redux/slices/categorySlice';
 
 const Home = () => {
 
-    const { searchValue } = useContext(SearchContext);
+    //const { searchValue } = useContext(SearchContext);
+    const searchValue = useSelector((state) => state.search.searchValue);
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
