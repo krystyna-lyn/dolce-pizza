@@ -5,9 +5,8 @@ import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
 import { getDocs, collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
-import { SearchContext } from '../../App';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../redux/slices/categorySlice';
@@ -45,49 +44,59 @@ const Home = () => {
         try {
             setIsLoading(true);
 
-            // base query
-            let q = query(
-                pizzaCollectionRef,
-                orderBy(sortField, sortOrder), // sort
-                limit(pizzasPerPage)
-            );
+            let q;
 
-            // filter category
-
-            if (categoryId > 0) {
+            // 🔎 Если есть поисковый запрос — загружаем ВСЕ пиццы
+            if (searchValue) {
                 q = query(
                     pizzaCollectionRef,
-                    where("category", "==", categoryId),
-                    orderBy(sortField, sortOrder),
-                    limit(pizzasPerPage)
+                    orderBy("name", "asc") // Поиск работает лучше по алфавиту
                 );
-            }
-            // if current page more than 1, start with last document
-            if (currentPage > 1 && lastDocRef.current) {
+            } else {
+                // 🔹 Обычная загрузка с пагинацией и сортировкой
                 q = query(
                     pizzaCollectionRef,
                     orderBy(sortField, sortOrder),
-                    startAfter(lastDocRef.current), // go to second page
                     limit(pizzasPerPage)
                 );
+
+                if (categoryId > 0) {
+                    q = query(
+                        pizzaCollectionRef,
+                        where("category", "==", categoryId),
+                        orderBy(sortField, sortOrder),
+                        limit(pizzasPerPage)
+                    );
+                }
+
+                if (currentPage > 1 && lastDocRef.current) {
+                    q = query(
+                        pizzaCollectionRef,
+                        orderBy(sortField, sortOrder),
+                        startAfter(lastDocRef.current),
+                        limit(pizzasPerPage)
+                    );
+                }
             }
 
-            // data
+            // Загружаем данные
             const data = await getDocs(q);
-
-            // save last document
             lastDocRef.current = data.docs[data.docs.length - 1];
 
-
-            const filteredData = data.docs.map((doc) => ({
+            let pizzas = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
             }));
 
-            setpizzaList(filteredData); //save pizzas in state
-            setIsLoading(false);
+            // 🔍 Фильтрация по поиску (если searchValue есть)
+            if (searchValue) {
+                pizzas = pizzas.filter((pizza) =>
+                    pizza.name.toLowerCase().includes(searchValue.toLowerCase().trim())
+                );
+            }
 
-            //console.log(q);
+            setpizzaList(pizzas); // Обновляем список пицц
+            setIsLoading(false);
         } catch (err) {
             console.error(err);
         }
@@ -101,10 +110,11 @@ const Home = () => {
         // console.log("current page:", currentPage);
         // console.log("sort:", sortField, sortOrder);
         // console.log("category:", categoryId);
+        console.log(searchValue)
 
         getPizzaList();
         window.scrollTo(0, 0);
-    }, [categoryId, sortField, sortOrder, currentPage]);
+    }, [categoryId, sortField, sortOrder, currentPage, searchValue]);
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
 
