@@ -19,7 +19,7 @@ const Home = () => {
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const sortField = useSelector((state) => state.sort.sortField);
+    const sortField = useSelector((state) => state.category.sortField);
 
     const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
     const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1

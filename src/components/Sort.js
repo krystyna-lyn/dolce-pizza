@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { setSortField } from '../redux/slices/sortSlice';
+import { setSortField } from '../redux/slices/categorySlice';
 
 
 const Sort = () => {
@@ -8,7 +8,9 @@ const Sort = () => {
     const [selected, setSelected] = useState(0);
 
     const dispatch = useDispatch();
-    const sortField = useSelector((state) => state.sort.sortField);
+    const sortField = useSelector((state) => state.category.sortField);
+
+    //console.log(useSelector(state => state.category.sortField))
 
     const list = ['Popular', 'Price', 'A-Z'];
     const sortKeys = ['popular', 'price', 'name']; // corresponding keys for sorting
@@ -16,7 +18,7 @@ const Sort = () => {
     const currentIndex = sortKeys.indexOf(sortField); // index of sortfield
     const sortName = list[currentIndex]; // name of sortfield
 
-    console.log(sortName)
+
 
     const selectItem = (index) => {
         dispatch(setSortField(sortKeys[index])); //send to redux

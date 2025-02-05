@@ -11,9 +11,8 @@ const Search = () => {
     const searchValue = useSelector((state) => state.search.searchValue);
 
     const handleChange = (event) => {
-        dispatch(setSearchValue(event.target.value)); // сохраняем в Redux
+        dispatch(setSearchValue(event.target.value));
     };
-
 
     return (
         <div className={styles.root}>
