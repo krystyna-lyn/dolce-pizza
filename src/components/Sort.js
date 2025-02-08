@@ -10,7 +10,6 @@ const Sort = () => {
     const dispatch = useDispatch();
     const sortField = useSelector((state) => state.category.sortField);
 
-    //console.log(useSelector(state => state.category.sortField))
 
     const list = ['Popular', 'Price', 'A-Z'];
     const sortKeys = ['popular', 'price', 'name']; // corresponding keys for sorting

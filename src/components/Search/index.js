@@ -3,10 +3,8 @@ import styles from './Search.module.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchValue } from '../../redux/slices/searchSlice'
 
-//import { SearchContext } from '../../App'
-
 const Search = () => {
-    //const { searchValue, setSearchValue } = useContext(SearchContext);
+
     const dispatch = useDispatch();
     const searchValue = useSelector((state) => state.search.searchValue);
 

@@ -13,7 +13,6 @@ import { setCategoryId } from '../../redux/slices/categorySlice';
 
 const Home = () => {
 
-    //const { searchValue } = useContext(SearchContext);
     const searchValue = useSelector((state) => state.search.searchValue);
 
     const [pizzaList, setpizzaList] = useState([]);
@@ -46,14 +45,13 @@ const Home = () => {
 
             let q;
 
-            // 🔎 Если есть поисковый запрос — загружаем ВСЕ пиццы
             if (searchValue) {
                 q = query(
                     pizzaCollectionRef,
-                    orderBy("name", "asc") // Поиск работает лучше по алфавиту
+                    orderBy("name", "asc")
                 );
             } else {
-                // 🔹 Обычная загрузка с пагинацией и сортировкой
+
                 q = query(
                     pizzaCollectionRef,
                     orderBy(sortField, sortOrder),
@@ -79,7 +77,6 @@ const Home = () => {
                 }
             }
 
-            // Загружаем данные
             const data = await getDocs(q);
             lastDocRef.current = data.docs[data.docs.length - 1];
 
@@ -88,14 +85,13 @@ const Home = () => {
                 id: doc.id,
             }));
 
-            // 🔍 Фильтрация по поиску (если searchValue есть)
             if (searchValue) {
                 pizzas = pizzas.filter((pizza) =>
                     pizza.name.toLowerCase().includes(searchValue.toLowerCase().trim())
                 );
             }
 
-            setpizzaList(pizzas); // Обновляем список пицц
+            setpizzaList(pizzas);
             setIsLoading(false);
         } catch (err) {
             console.error(err);
@@ -107,9 +103,6 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        // console.log("current page:", currentPage);
-        // console.log("sort:", sortField, sortOrder);
-        // console.log("category:", categoryId);
         console.log(searchValue)
 
         getPizzaList();
@@ -161,6 +154,5 @@ const Home = () => {
         </div>
     );
 };
-
 
 export default Home
