@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoryId } from '../../redux/slices/categorySlice';
+import { setCategoryId, setPageCount } from '../../redux/slices/categorySlice';
 
 const Home = () => {
 
@@ -21,17 +21,19 @@ const Home = () => {
     const sortField = useSelector((state) => state.category.sortField);
 
     const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
-    const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
+    //const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
     const [totalPizzas, setTotalPizzas] = useState(0); // To store the total number of pizzas
 
     // categoriId from Redux
-    const categoryId = useSelector((state) => state.category.categoryId);
+    const [categoryId, pageCount] = useSelector((state) => state.category.categoryId);
     const dispatch = useDispatch();
 
     const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
 
-
+    const onChangePage = (number) => {
+        dispatch(setPageCount(number));
+    }
     const getTotalPizzas = async () => {
         const data = await getDocs(pizzaCollectionRef);
         setTotalPizzas(data.size);  //total items in the collection
@@ -67,7 +69,7 @@ const Home = () => {
                     );
                 }
 
-                if (currentPage > 1 && lastDocRef.current) {
+                if (pageCount > 1 && lastDocRef.current) {
                     q = query(
                         pizzaCollectionRef,
                         orderBy(sortField, sortOrder),
@@ -107,7 +109,7 @@ const Home = () => {
 
         getPizzaList();
         window.scrollTo(0, 0);
-    }, [categoryId, sortField, sortOrder, currentPage, searchValue]);
+    }, [categoryId, sortField, sortOrder, pageCount, searchValue]);
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
 
@@ -148,7 +150,7 @@ const Home = () => {
                 </div>
             </div>
             <Pagination
-                onChangePage={(number) => setCurrentPage(number)}
+                onChangePage={onChangePage}
                 pageCount={Math.ceil(totalPizzas / pizzasPerPage)}
             />
         </div>

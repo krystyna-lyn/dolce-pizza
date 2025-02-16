@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     categoryId: 0,
     sortField: "price",
+    pageCount: 1,
 }
 
 export const categorySlice = createSlice({
@@ -15,10 +16,13 @@ export const categorySlice = createSlice({
         setSortField(state, action) {
             state.sortField = action.payload;
         },
+        setPageCount(state, action) {
+            state.pageCount = action.payload;
+        },
     },
 })
 
-export const { setCategoryId, setSortField } = categorySlice.actions
+export const { setCategoryId, setSortField, setPageCount } = categorySlice.actions
 
 
 export default categorySlice.reducer
