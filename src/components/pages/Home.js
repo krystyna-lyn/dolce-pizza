@@ -7,6 +7,7 @@ import { db } from "../../firebaseConfig";
 import { getDocs, collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
 import { useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
+import qs from 'qs';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../redux/slices/categorySlice';
@@ -104,10 +105,17 @@ const Home = () => {
 
     useEffect(() => {
         console.log(searchValue)
-
         getPizzaList();
         window.scrollTo(0, 0);
     }, [categoryId, sortField, sortOrder, currentPage, searchValue]);
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortField,
+            categoryId,
+            currentPage
+        })
+    }, [sortField, categoryId, currentPage])
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
 
