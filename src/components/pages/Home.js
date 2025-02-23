@@ -11,6 +11,7 @@ import qs from 'qs';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../redux/slices/categorySlice';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
@@ -28,6 +29,7 @@ const Home = () => {
     // categoriId from Redux
     const categoryId = useSelector((state) => state.category.categoryId);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
@@ -115,6 +117,8 @@ const Home = () => {
             categoryId,
             currentPage
         })
+        //console.log(queryString)
+        navigate(`?${queryString}`);
     }, [sortField, categoryId, currentPage])
 
     const skeleton = [...Array(8)].map((_, index) => <Skeleton key={index} />);
