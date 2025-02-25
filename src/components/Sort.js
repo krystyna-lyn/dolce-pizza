@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { setSortField } from '../redux/slices/categorySlice';
 
@@ -9,6 +9,7 @@ const Sort = () => {
 
     const dispatch = useDispatch();
     const sortField = useSelector((state) => state.category.sortField);
+    const sortRef = useRef();
 
 
     const list = ['Popular', 'Price', 'A-Z'];
@@ -18,14 +19,27 @@ const Sort = () => {
     const sortName = list[currentIndex]; // name of sortfield
 
 
-
     const selectItem = (index) => {
         dispatch(setSortField(sortKeys[index])); //send to redux
         setIsOpen(false);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!e.path.includes(sortRef.current)) {
+                setIsOpen(false);
+                console.log('click outside')
+            }
+        }
+        document.body.addEventListener('click', handleClickOutside)
+        return () => {
+            document.body.removeEventListener('click', handleClickOutside)
+        }
+
+    }, [])
+
     return (
-        <div class="sort">
+        <div ref={sortRef} class="sort">
             <div class="sort__label">
                 <svg
                     width="10"
