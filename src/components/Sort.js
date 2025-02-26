@@ -33,6 +33,7 @@ const Sort = () => {
         };
         document.body.addEventListener('click', handleClickOutside)
         return () => {
+            console.log('sort unmound')
             document.body.removeEventListener('click', handleClickOutside)
         }
 
