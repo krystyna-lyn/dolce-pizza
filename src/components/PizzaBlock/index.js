@@ -1,11 +1,30 @@
 import { useState } from "react";
 import { Skeleton } from "../Skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../redux/slices/cartSlice";
 
-const PizzaBlock = ({ title, image, price, sizes, types, loading = false }) => {
+const PizzaBlock = ({ id, title, image, price, sizes, types, loading = false }) => {
 
-    const typeNames = ['Thin', 'Tradicional'];
     const [activeType, setActivetype] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
+    const [localCount, setLocalCount] = useState(0); // local count only for this component
+
+    const typeNames = ['Thin', 'Tradicional'];
+
+    const dispatch = useDispatch();
+
+    const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            image,
+            size: sizes[activeSize],
+            type: typeNames[activeType],
+        };
+        dispatch(addProduct(item));
+        setLocalCount(localCount + 1);
+    };
 
     return (
         <>
@@ -48,8 +67,8 @@ const PizzaBlock = ({ title, image, price, sizes, types, loading = false }) => {
                                         fill="white"
                                     />
                                 </svg>
-                                <span>Add</span>
-                                <i>2</i>
+                                <span onClick={onClickAdd}>Add</span>
+                                {localCount > 0 && <i>{localCount}</i>}
                             </div>
                         </div>
                     </div>

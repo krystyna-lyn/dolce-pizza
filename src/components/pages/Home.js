@@ -124,6 +124,7 @@ const Home = () => {
         })
         .map((obj) => (<PizzaBlock
             key={obj.id}
+            id={obj.id}
             title={obj.name}
             image={obj.image}
             price={obj.price}
