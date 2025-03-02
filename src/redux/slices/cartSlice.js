@@ -40,10 +40,23 @@ export const cartSlice = createSlice({
         },
 
         minusProduct(state, action) {
-            const findItem = state.items.find((obj) => obj.id === action.payload);
-            if (findItem && findItem.count > 1) {  // Проверяем, чтобы количество не стало меньше 1
-                findItem.count--;
+            const findItem = state.items.find(
+                (obj) => obj.id === action.payload.id && obj.size === action.payload.size && obj.type === action.payload.type
+            );
+
+            if (findItem) {
+                if (findItem.count > 1) {
+                    findItem.count--;
+                } else {
+                    state.items = state.items.filter(
+                        (obj) => !(obj.id === action.payload.id && obj.size === action.payload.size && obj.type === action.payload.type)
+                    );
+                }
             }
+
+            state.totalPrice = state.items.reduce((sum, obj) => {
+                return obj.price * obj.count + sum;
+            }, 0);
         },
 
         removeProduct(state, action) {
