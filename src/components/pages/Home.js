@@ -105,7 +105,6 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        console.log(searchValue)
         getPizzaList();
         window.scrollTo(0, 0);
     }, [categoryId, sortField, sortOrder, currentPage, searchValue]);

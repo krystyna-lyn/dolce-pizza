@@ -18,9 +18,11 @@ export const cartSlice = createSlice({
 
         addProduct: (state, action) => {
             console.log("Add pizza:", action.payload);
+
             const findItem = state.items.find(
                 (obj) => obj.id === action.payload.id && obj.size === action.payload.size && obj.type === action.payload.type
             );
+
 
             if (findItem) {
                 findItem.count++; //add quantity
@@ -64,7 +66,7 @@ export const cartSlice = createSlice({
         },
 
         clearProducts: (state, action) => {
-            state.items = [] //
+            state.items = [];
         },
 
     },

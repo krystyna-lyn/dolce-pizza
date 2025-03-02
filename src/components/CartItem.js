@@ -25,7 +25,7 @@ const CartItem = ({ id, title, type, size, price, image, count }) => {
             </div>
             <div class="cart__item-info">
                 <h3>{title}</h3>
-                <p>{type}, 30 cm</p>
+                <p>{type}, {size} cm</p>
             </div>
             <div class="cart__item-count">
                 <div onClick={onClickMinus} class="button button--outline button--circle cart__item-count-minus">

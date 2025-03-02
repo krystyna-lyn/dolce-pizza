@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import CartItem from "../CartItem";
+import { clearProducts } from "../../redux/slices/cartSlice";
 
 
 const Cart = () => {
 
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cart.items);
+    const { items, totalPrice } = useSelector((state) => state.cart);
 
 
     return (
@@ -28,7 +29,7 @@ const Cart = () => {
                             <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
 
-                        <span>Delete all</span>
+                        <span onClick={() => dispatch(clearProducts())}>Delete all</span>
                     </div>
                 </div>
                 <div class="content__items">
@@ -41,8 +42,8 @@ const Cart = () => {
                 </div>
                 <div class="cart__bottom">
                     <div class="cart__bottom-details">
-                        <span> Total: <b>3</b> </span>
-                        <span> Total: <b>60 €</b> </span>
+                        <span> Total: <b>{items.length}</b> </span>
+                        <span> Total: <b>{totalPrice} €</b> </span>
                     </div>
                     <div class="cart__bottom-buttons">
                         <Link to="/" class="button button--outline button--add go-back-btn">
