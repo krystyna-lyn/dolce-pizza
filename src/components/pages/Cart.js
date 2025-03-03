@@ -8,7 +8,7 @@ const Cart = () => {
 
     const dispatch = useDispatch();
     const { items, totalPrice } = useSelector((state) => state.cart);
-
+    const totalCount = useSelector((state) => state.cart.totalCount);
 
     return (
         <div className="container container--cart">
@@ -42,7 +42,7 @@ const Cart = () => {
                 </div>
                 <div class="cart__bottom">
                     <div class="cart__bottom-details">
-                        <span> Total: <b>{items.length}</b> </span>
+                        <span> Total: <b>{totalCount}</b> </span>
                         <span> Total: <b>{totalPrice} €</b> </span>
                     </div>
                     <div class="cart__bottom-buttons">

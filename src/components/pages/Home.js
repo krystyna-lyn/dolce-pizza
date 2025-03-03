@@ -16,6 +16,7 @@ const Home = () => {
 
     const searchValue = useSelector((state) => state.search.searchValue);
 
+
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
