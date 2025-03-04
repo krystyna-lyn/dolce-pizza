@@ -10,6 +10,13 @@ const Cart = () => {
     const { items, totalPrice } = useSelector((state) => state.cart);
     const totalCount = useSelector((state) => state.cart.totalCount);
 
+    const removeItems = () => {
+        if (window.confirm
+            ("Are you sure you want to delete all items from the cart?")) {
+            dispatch(clearProducts())
+        }
+    }
+
     return (
         <div className="container container--cart">
             <div class="cart">
@@ -29,7 +36,7 @@ const Cart = () => {
                             <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
 
-                        <span onClick={() => dispatch(clearProducts())}>Delete all</span>
+                        <span onClick={removeItems}>Delete all</span>
                     </div>
                 </div>
                 <div class="content__items">
