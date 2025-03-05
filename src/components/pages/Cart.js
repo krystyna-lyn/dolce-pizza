@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom"
 import CartItem from "../CartItem";
 import { clearProducts } from "../../redux/slices/cartSlice";
+import { CartEmpty } from "../CartEmpty";
 
 
 const Cart = () => {
@@ -15,6 +16,9 @@ const Cart = () => {
             ("Are you sure you want to delete all items from the cart?")) {
             dispatch(clearProducts())
         }
+    }
+    if (!totalPrice) {
+        return <CartEmpty />
     }
 
     return (
