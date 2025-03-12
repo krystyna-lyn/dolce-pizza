@@ -19,6 +19,7 @@ const Home = () => {
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [status, setStatus] = useState("loading"); // 'loading','error', 'success'
 
     const sortField = useSelector((state) => state.category.sortField);
 
@@ -29,7 +30,6 @@ const Home = () => {
     // categoriId from Redux
     const categoryId = useSelector((state) => state.category.categoryId);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const pizzasPerPage = 4; // Number of pizzas per page
     const pizzaCollectionRef = collection(db, "pizza");
@@ -45,7 +45,7 @@ const Home = () => {
     const getPizzaList = async () => {
         try {
             setIsLoading(true);
-
+            setStatus("loading");
             let q;
 
             if (searchValue) {
@@ -96,8 +96,16 @@ const Home = () => {
 
             setpizzaList(pizzas);
             setIsLoading(false);
+
+            if (pizzas.length === 0) {
+                setStatus("error");
+            } else {
+                setStatus("success");
+            }
+
         } catch (err) {
             console.error(err);
+            setStatus("error");
         }
     };
 
@@ -146,9 +154,19 @@ const Home = () => {
 
                 </div>
                 <h2 className="content__title">All Pizzas</h2>
-                <div className="content__items">
-                    {isLoading ? skeleton : pizzas}
-                </div>
+                {
+                    status === 'error' ? (
+                        <div className="content__error-info">
+                            <h2>Something went wrong 😢</h2>
+                            <p>We couldn't find any pizzas. Please try again later.</p>
+                        </div>
+                    ) : (
+                        <div className="content__items">
+                            {isLoading ? skeleton : pizzas}
+                        </div>
+                    )
+                }
+
             </div>
             <Pagination
                 onChangePage={(number) => setCurrentPage(number)}
