@@ -10,12 +10,11 @@ import Pagination from '../Pagination';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoryId } from '../../redux/slices/categorySlice';
-import { useNavigate } from 'react-router-dom';
+
 
 const Home = () => {
 
     const searchValue = useSelector((state) => state.search.searchValue);
-
 
     const [pizzaList, setpizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { setSortField } from '../redux/slices/categorySlice';
+import { selectSort, setSortField } from '../redux/slices/categorySlice';
 
 
 const Sort = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(0);
+    const [selected] = useState(0);
 
     const dispatch = useDispatch();
-    const sortField = useSelector((state) => state.category.sortField);
+    const sortField = useSelector(selectSort);
     const sortRef = useRef();
 
 

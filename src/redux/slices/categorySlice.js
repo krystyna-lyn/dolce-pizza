@@ -19,6 +19,8 @@ export const categorySlice = createSlice({
     },
 })
 
+export const selectSort = (state) => state.category.sortField;
+
 export const { setCategoryId, setSortField } = categorySlice.actions
 
 
