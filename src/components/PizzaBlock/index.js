@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Skeleton } from "../Skeleton";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/slices/cartSlice";
 
 const PizzaBlock = ({ id, title, image, price, sizes, types, loading = false }) => {
