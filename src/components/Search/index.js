@@ -8,9 +8,7 @@ import debounce from 'lodash.debounce';
 const Search = () => {
     const [value, setValue] = useState();
     const dispatch = useDispatch();
-    //const searchValue = useSelector((state) => state.search.searchValue);
     const inputRef = useRef();
-
 
     const OnClickClear = () => {
         dispatch(setSearchValue(''));

@@ -1,4 +1,3 @@
-import Header from './components/Header';
 import './scss/app.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Auth from './components/pages/Auth';
@@ -7,6 +6,7 @@ import NotFound from './components/pages/NotFound';
 import Cart from './components/pages/Cart';
 import { createContext, useState } from 'react';
 import FullPizza from './components/pages/FullPizza';
+import MainLoyout from './components/layouts/MainLoyout';
 
 export const SearchContext = createContext();
 
@@ -16,23 +16,20 @@ function App() {
   return (
     <SearchContext.Provider value={{ searchValue, setSearchValue }}>
       <div className="App">
-        <div class="wrapper">
 
-          <Router>
-            <Header />
-
-            <Routes>
+        <Router>
+          <Routes>
+            <Route path='/' element={<MainLoyout />}>
               <Route path='/' element={<Home />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/pizza/:id" element={<FullPizza />} />
               <Route path='/notfound' element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
+            </Route>
+          </Routes>
 
-          </Router>
-
-        </div>
+        </Router>
 
       </div>
     </SearchContext.Provider>

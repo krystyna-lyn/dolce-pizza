@@ -6,7 +6,7 @@ const NotFound = () => {
     return (
         <div>
             <NotFoundBlock />
-            <button>
+            <button className='button button--notfound'>
                 <Link to="/">Go Home</Link>
             </button>
         </div>

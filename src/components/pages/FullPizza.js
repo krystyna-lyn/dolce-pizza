@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../../firebaseConfig';
 import { doc, getDoc } from "firebase/firestore";
 
@@ -8,7 +8,9 @@ const FullPizza = () => {
     const { id } = useParams();
     const [pizza, setPizza] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
+    //	useEffect() запускает код при рендере компонента и каждый раз, когда меняется id.
 
     useEffect(() => {
         const fetchPizza = async () => {
@@ -18,33 +20,30 @@ const FullPizza = () => {
                 if (pizzaDoc.exists()) {
                     setPizza({ id: pizzaDoc.id, ...pizzaDoc.data() });
                 } else {
-                    console.log("No such pizza!");
+                    navigate('/');
                 }
             } catch (error) {
                 console.error("Error fetching pizza:", error);
+                navigate('/');
+
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchPizza();
-    }, [id]);
+    }, [id, navigate]);
 
     if (isLoading) {
         return <h2>Loading...</h2>;
     }
 
-    if (!pizza) {
-        return <h2>Pizza not found</h2>;
-    }
-
-
     return (
         <div className="container">
-            <img src={pizza.image} alt={pizza.name} />
-            <h1>{pizza.name}</h1>
-            <p>{pizza.description || "No description available."}</p>
-            <h4>{pizza.price} €</h4>
+            <img src={pizza?.image} alt={pizza?.name} />
+            <h1>{pizza?.name}</h1>
+            <p>{pizza?.description || "No description available."}</p>
+            <h4>{pizza?.price} €</h4>
         </div>
     )
 }
