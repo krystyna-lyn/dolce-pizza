@@ -3,10 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../../firebaseConfig';
 import { doc, getDoc } from "firebase/firestore";
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
+
+    const [pizza, setPizza] = useState<{
+        id: string,
+        name: string,
+        price: number,
+        image: string,
+        description: string,
+    }>();
 
     const { id } = useParams();
-    const [pizza, setPizza] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -15,6 +22,10 @@ const FullPizza = () => {
     useEffect(() => {
         const fetchPizza = async () => {
             try {
+                if (!id) {
+                    navigate('/');
+                    return;
+                }
                 const pizzaDoc = await getDoc(doc(db, "pizza", id));
 
                 if (pizzaDoc.exists()) {
