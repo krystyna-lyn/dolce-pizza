@@ -3,21 +3,21 @@ import logo from '../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 import { useSelector } from 'react-redux';
-import { selectCart } from '../redux/slices/cartSlice';
+import { selectCart, selectTotal } from '../redux/slices/cartSlice';
 
 const Header = () => {
 
     const { totalPrice } = useSelector(selectCart);
-    const totalCount = useSelector((state) => state.cart.totalCount);
+    const totalCount = useSelector(selectTotal);
     const location = useLocation();
 
     //console.log(location)
 
     return (
-        <div class="header">
-            <div class="container">
+        <div className="header">
+            <div className="container">
                 <Link to='/'>
-                    <div class="header__logo">
+                    <div className="header__logo">
                         <img width="38" src={logo} alt="Pizza logo" />
                         <div>
                             <h1>Dolce Pizza</h1>
@@ -28,10 +28,10 @@ const Header = () => {
 
                 <Search />
 
-                <div class="header__cart">
-                    <div class="header__user">
-                        <Link to="/login" class="button button--user">
-                            <svg class="svg-icon"
+                <div className="header__cart">
+                    <div className="header__user">
+                        <Link to="/login" className="button button--user">
+                            <svg className="svg-icon"
                                 width="18"
                                 height="18"
                                 viewBox="0 0 18 18"
@@ -43,9 +43,9 @@ const Header = () => {
                     {
                         location.pathname !== '/cart' && (
 
-                            <Link to="/cart" class="button button--cart">
+                            <Link to="/cart" className="button button--cart">
                                 <span>{totalPrice} €</span>
-                                <div class="button__delimiter"></div>
+                                <div className="button__delimiter"></div>
                                 <svg
                                     width="18"
                                     height="18"

@@ -73,6 +73,7 @@ export const cartSlice = createSlice({
 })
 
 export const selectCart = (state) => state.cart;
+export const selectTotal = (state) => state.cart.totalCount;
 
 
 export const { addProduct, minusProduct, removeProduct, clearProducts } = cartSlice.actions

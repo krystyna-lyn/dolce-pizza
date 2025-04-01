@@ -3,40 +3,40 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../../firebaseConfig';
 import { doc, getDoc } from "firebase/firestore";
 
+
+interface Pizza {
+    id: string;
+    name: string;
+    price: number;
+    image: string;
+    description: string;
+}
+
 const FullPizza: React.FC = () => {
 
-    const [pizza, setPizza] = useState<{
-        id: string,
-        name: string,
-        price: number,
-        image: string,
-        description: string,
-    }>();
-
+    const [pizza, setPizza] = useState<Pizza | null>(null);
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    //	useEffect() запускает код при рендере компонента и каждый раз, когда меняется id.
-
     useEffect(() => {
         const fetchPizza = async () => {
-            try {
-                if (!id) {
-                    navigate('/');
-                    return;
-                }
-                const pizzaDoc = await getDoc(doc(db, "pizza", id));
+            if (!id) {
+                navigate('/');
+                return;
+            }
 
+            try {
+                const pizzaDoc = await getDoc(doc(db, "pizza", id));
                 if (pizzaDoc.exists()) {
-                    setPizza({ id: pizzaDoc.id, ...pizzaDoc.data() });
+                    const pizzaData = pizzaDoc.data() as Omit<Pizza, 'id'>; // Указываем, что это объект типа `Pizza` без id
+                    setPizza({ id: pizzaDoc.id, ...pizzaData }); // Добавляем id вручную
                 } else {
                     navigate('/');
                 }
             } catch (error) {
                 console.error("Error fetching pizza:", error);
                 navigate('/');
-
             } finally {
                 setIsLoading(false);
             }
@@ -49,14 +49,19 @@ const FullPizza: React.FC = () => {
         return <h2>Loading...</h2>;
     }
 
+    if (!pizza) {
+        return <h2>Pizza not found</h2>;
+    }
+
     return (
         <div className="container">
-            <img src={pizza?.image} alt={pizza?.name} />
-            <h1>{pizza?.name}</h1>
-            <p>{pizza?.description || "No description available."}</p>
-            <h4>{pizza?.price} €</h4>
+            <img src={pizza.image} alt={pizza.name} />
+            <h1>{pizza.name}</h1>
+            <p>{pizza.description || "No description available."}</p>
+            <h4>{pizza.price} €</h4>
         </div>
-    )
-}
+    );
+};
 
-export default FullPizza
+export default FullPizza;
+
