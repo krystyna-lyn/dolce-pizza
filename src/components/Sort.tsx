@@ -9,7 +9,7 @@ const Sort = () => {
 
     const dispatch = useDispatch();
     const sortField = useSelector(selectSort);
-    const sortRef = useRef();
+    const sortRef = useRef(null);
 
 
     const list = ['Popular', 'Price', 'A-Z'];
@@ -19,13 +19,13 @@ const Sort = () => {
     const sortName = list[currentIndex]; // name of sortfield
 
 
-    const selectItem = (index) => {
+    const selectItem = (index: any) => {
         dispatch(setSortField(sortKeys[index])); //send to redux
         setIsOpen(false);
     };
 
     useEffect(() => {
-        const handleClickOutside = (e) => {
+        const handleClickOutside = (e: any) => {
             if (sortRef.current && !e.composedPath().includes(sortRef.current)) {
                 setIsOpen(false);
                 console.log('click outside');
@@ -40,8 +40,8 @@ const Sort = () => {
     }, [])
 
     return (
-        <div ref={sortRef} class="sort">
-            <div class="sort__label">
+        <div ref={sortRef} className="sort">
+            <div className="sort__label">
                 <svg
                     width="10"
                     height="6"
