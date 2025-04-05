@@ -1,10 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Skeleton } from "../Skeleton";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
 
-const PizzaBlock = ({ id, title, image, price, sizes, types, loading = false }) => {
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+    types: number[];
+    sizes: number[];
+    loading: any
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, image, price, sizes, types, loading = false }) => {
 
     const [activeType, setActivetype] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
@@ -34,16 +44,16 @@ const PizzaBlock = ({ id, title, image, price, sizes, types, loading = false }) 
                 :
 
                 <div className="pizza-block-wrapper">
-                    <div class="pizza-block">
+                    <div className="pizza-block">
                         <Link to={`/pizza/${id}`}>
                             <img
-                                class="pizza-block__image"
+                                className="pizza-block__image"
                                 src={image}
                                 alt="Pizza"
                             />
-                            <h4 class="pizza-block__title">{title}</h4>
+                            <h4 className="pizza-block__title">{title}</h4>
                         </Link>
-                        <div class="pizza-block__selector">
+                        <div className="pizza-block__selector">
                             <ul>
                                 {types.map((typeIndex, i) => (
                                     <li key={i} onClick={() => setActivetype(typeIndex)} className={activeType === typeIndex ? 'active' : ''}>{typeNames[typeIndex]}</li>
@@ -57,9 +67,9 @@ const PizzaBlock = ({ id, title, image, price, sizes, types, loading = false }) 
                             </ul>
                         </div>
 
-                        <div class="pizza-block__bottom">
-                            <div class="pizza-block__price">from €{price}</div>
-                            <div class="button button--outline button--add">
+                        <div className="pizza-block__bottom">
+                            <div className="pizza-block__price">from €{price}</div>
+                            <div className="button button--outline button--add">
                                 <svg
                                     width="12"
                                     height="12"
