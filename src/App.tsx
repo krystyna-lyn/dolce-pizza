@@ -2,12 +2,11 @@ import React from 'react';
 import './scss/app.scss';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Auth from './components/pages/Auth';
-import Home from './components/pages/Home';
+import Home from './components/pages/Home.tsx';
 import NotFound from './components/pages/NotFound';
 import Cart from './components/pages/Cart';
 import FullPizza from './components/pages/FullPizza.tsx';
-import MainLoyout from './components/layouts/MainLoyout';
-
+import MainLoyout from './components/layouts/MainLoyout.tsx';
 
 
 function App() {

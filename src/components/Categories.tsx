@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectCategoryId } from "../redux/slices/categorySlice";
+import { selectCategoryId, setCategoryId } from "../redux/slices/categorySlice";
 import React from "react";
+import { AppDispatch } from "../redux/store";
 
-type CategoriesProps = {
-    setCategoryId: any
-}
 
-const Categories: React.FC<CategoriesProps> = ({ setCategoryId }) => {
+const Categories: React.FC = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>();
     const categoryId = useSelector(selectCategoryId)
 
     const categories = ['All', 'Meat', 'Vegetarian', 'Grilled', 'Spicy'];

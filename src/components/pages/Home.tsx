@@ -5,25 +5,35 @@ import PizzaBlock from '../PizzaBlock';
 
 import { db } from "../../firebaseConfig";
 import { getDocs, collection, query, orderBy, where, limit, startAfter } from "firebase/firestore";
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Pagination from '../Pagination';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCategoryId, selectSort, setCategoryId } from '../../redux/slices/categorySlice';
 import { selectSearchValue } from '../../redux/slices/searchSlice';
+import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 
+interface Pizza {
+    id: string;
+    name: string;
+    image: string;
+    price: number;
+    sizes: number[];
+    types: number[];
+    category: number;
+}
 
-const Home = () => {
+const Home: React.FC = () => {
 
     const searchValue = useSelector(selectSearchValue);
 
-    const [pizzaList, setpizzaList] = useState([]);
+    const [pizzaList, setpizzaList] = useState<Pizza[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [status, setStatus] = useState("loading"); // 'loading','error', 'success'
 
     const sortField = useSelector(selectSort);
 
-    const [sortOrder, setSortOrder] = useState("asc"); // Sort direction: 'asc' or 'desc'
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Sort direction: 'asc' or 'desc'
     const [currentPage, setCurrentPage] = useState(1)// Current page starts at 1
     const [totalPizzas, setTotalPizzas] = useState(0); // To store the total number of pizzas
 
@@ -40,7 +50,8 @@ const Home = () => {
         setTotalPizzas(data.size);  //total items in the collection
     };
 
-    const lastDocRef = useRef(null); // last document(item)
+    // last document(item)
+    const lastDocRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(null);
 
     const getPizzaList = async () => {
         try {
@@ -83,10 +94,10 @@ const Home = () => {
             const data = await getDocs(q);
             lastDocRef.current = data.docs[data.docs.length - 1];
 
-            let pizzas = data.docs.map((doc) => ({
+            let pizzas: Pizza[] = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
-            }));
+            })) as Pizza[];
 
             if (searchValue) {
                 pizzas = pizzas.filter((pizza) =>
@@ -145,11 +156,11 @@ const Home = () => {
             <div className="container">
                 <div className="content__top">
 
-                    <button class="sort-button" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
+                    <button className="sort-button" onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
                         Sort {sortOrder === "asc" ? "↑" : "↓"}
                     </button>
 
-                    <Categories setCategoryId={(id) => dispatch(setCategoryId(id))} />
+                    <Categories />
                     <Sort />
 
                 </div>
@@ -169,7 +180,7 @@ const Home = () => {
 
             </div>
             <Pagination
-                onChangePage={(number) => setCurrentPage(number)}
+                onChangePage={(number: number) => setCurrentPage(number)}
                 pageCount={Math.ceil(totalPizzas / pizzasPerPage)}
             />
         </div>

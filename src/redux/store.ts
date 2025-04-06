@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import category from '../redux/slices/categorySlice'
-import search from '../redux/slices/searchSlice'
-import cart from '../redux/slices/cartSlice'
+import category from './slices/categorySlice'
+import search from './slices/searchSlice'
+import cart from './slices/cartSlice'
 
 export const store = configureStore({
     reducer: {
@@ -11,4 +11,5 @@ export const store = configureStore({
     },
 });
 
+export type AppDispatch = typeof store.dispatch;
 export default store;

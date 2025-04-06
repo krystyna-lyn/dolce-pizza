@@ -11,7 +11,7 @@ type PizzaBlockProps = {
     image: string;
     types: number[];
     sizes: number[];
-    loading: any
+    loading?: boolean;
 }
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, image, price, sizes, types, loading = false }) => {
