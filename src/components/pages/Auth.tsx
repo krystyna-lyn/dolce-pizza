@@ -2,13 +2,14 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, si
 import { useEffect, useState } from "react";
 import { auth, googleProvider } from "../../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { User } from "firebase/auth";
 
 
 
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
 
     //console.log(auth?.currentUser?.email)
 
@@ -51,7 +52,7 @@ const Auth = () => {
 
     return (
 
-        <div class="login-content">
+        <div className="login-content">
             {user ? (
                 <div>
                     <h1>Welcome, {user.email || "User"}!</h1>
@@ -59,7 +60,7 @@ const Auth = () => {
                 </div>
             ) : (
                 <>
-                    <h1>Login</h1><form class='form'>
+                    <h1>Login</h1><form className='form'>
                         <input type="email"
                             placeholder="Email"
                             required
@@ -68,8 +69,8 @@ const Auth = () => {
                             placeholder="Password"
                             required
                             onChange={(e) => setPassword(e.target.value)} />
-                        <button class="button" onClick={singnIn}>Sign in</button>
-                        <button class="button" onClick={googleSignIn}>with Google</button>
+                        <button className="button" onClick={singnIn}>Sign in</button>
+                        <button className="button" onClick={googleSignIn}>with Google</button>
                     </form>
                 </>
             )}
