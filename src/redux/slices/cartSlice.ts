@@ -1,6 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+interface CartItem {
+    id: string;
+    price: number;
+    size: string;
+    type: string;
+    count: number;
+}
+
+interface CartState {
+    totalPrice: number;
+    totalCount: number;
+    items: CartItem[];
+}
+
+const initialState: CartState = {
     totalPrice: 0,
     totalCount: 0,
     items: [],
@@ -72,8 +86,8 @@ export const cartSlice = createSlice({
     },
 })
 
-export const selectCart = (state) => state.cart;
-export const selectTotal = (state) => state.cart.totalCount;
+export const selectCart = (state: { cart: CartState }) => state.cart;
+export const selectTotal = (state: { cart: CartState }) => state.cart.totalCount;
 
 
 export const { addProduct, minusProduct, removeProduct, clearProducts } = cartSlice.actions
