@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import styles from './Search.module.scss'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearchValue } from '../../redux/slices/searchSlice'
 //@ts-ignore
 import debounce from 'lodash.debounce';
@@ -11,7 +11,7 @@ const Search: React.FC = () => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const OnClickClear = () => {
+    const handleClickClear = () => {
         dispatch(setSearchValue(''));
         setValue('');
         inputRef.current?.focus();
@@ -24,7 +24,7 @@ const Search: React.FC = () => {
         []
     )
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
         updateSearchValue(event.target.value);
     }
@@ -51,7 +51,7 @@ const Search: React.FC = () => {
 
                 placeholder='Search pizza' />
             {value && (
-                <svg onClick={OnClickClear} className={styles.clearIcon} height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z" /><path d="M0 0h48v48h-48z" fill="none" />
+                <svg onClick={handleClickClear} className={styles.clearIcon} height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z" /><path d="M0 0h48v48h-48z" fill="none" />
                 </svg>
             )}
         </div>

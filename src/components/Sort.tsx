@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSortField } from '../redux/slices/categorySlice';
 
+type PopupClick = MouseEvent & {
+    path: Node[];
+};
 
 const Sort = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,14 +22,16 @@ const Sort = () => {
     const sortName = list[currentIndex]; // name of sortfield
 
 
-    const selectItem = (index: any) => {
+    const selectItem = (index: number) => {
         dispatch(setSortField(sortKeys[index])); //send to redux
         setIsOpen(false);
     };
 
     useEffect(() => {
-        const handleClickOutside = (e: any) => {
-            if (sortRef.current && !e.composedPath().includes(sortRef.current)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as PopupClick;
+
+            if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
                 setIsOpen(false);
                 console.log('click outside');
             }
@@ -64,8 +69,11 @@ const Sort = () => {
                             list.map((name, index) => (
                                 <li key={index}
                                     onClick={() => selectItem(index)}
-                                    className={selected === index ? 'active' : ''}
-                                >{name}</li>
+                                    className={currentIndex === index ? 'active' : ''}
+                                >
+                                    {name}
+                                </li>
+
                             ))
                         }
 
